@@ -1,0 +1,36 @@
+{
+  "$schema": "https://www.krakend.io/schema/krakend.json",
+  "version": 3,
+  "name": "KrakenD - API Gateway",
+  "output_encoding": "json",
+  "timeout": "3000ms",
+  "cache_ttl": "300s",
+  "disable_rest": true,
+  "endpoints": [
+    {
+      "endpoint": "/repositories",
+      "method": "GET",
+      "output_encoding": "json",
+      "backend": [
+        {
+          "url_pattern": "/repositories",
+          "encoding": "json",
+          "sd": "static",
+          "method": "GET",
+          "is_collection": true,
+          "host": [
+            "https://api.github.com"
+          ],
+          "disable_host_sanitize": false
+        }
+      ],
+      "input_query_strings": [
+        "since"
+      ],
+      "input_headers": [
+        "X-Github-Api-Version",
+        "Authorization"
+      ]
+    }
+  ]
+}
